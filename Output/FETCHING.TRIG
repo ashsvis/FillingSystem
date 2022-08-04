@@ -1,0 +1,353 @@
+USE [UPNVC]
+GO
+/****** Object:  Trigger [dbo].[FetchingUpdate]    Script Date: 08.04.22 9:54:40 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Шаповалов Александр
+-- Create date: 09.04.2022
+-- Description:	Обновление поля 
+-- =============================================
+ALTER TRIGGER [dbo].[FetchingUpdate] 
+   ON  [dbo].[FETCHING]
+   AFTER UPDATE
+AS 
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	-- SET NOCOUNT ON;
+declare @OverpassNew int;
+declare @OverpassOld int;
+declare @WayNew int;
+declare @WayOld int;
+declare @ProductNew nvarchar(15);
+declare @ProductOld nvarchar(15);
+declare @RiserNew int;
+declare @RiserOld int;
+declare @IpAddressNew nvarchar(15);
+declare @IpAddressOld nvarchar(15);
+declare @IpPortNew int;
+declare @IpPortOld int;
+declare @NodeNew int;
+declare @NodeOld int;
+declare @FuncNew int;
+declare @FuncOld int;
+declare @ActiveNew bit;
+declare @ActiveOld bit;
+declare @NumberNew nvarchar(15);
+declare @NumberOld nvarchar(15);
+declare @NTypeNew int;
+declare @NTypeOld int;
+declare @SnapTimeNew datetime;
+declare @SnapTimeOld datetime;
+declare @HR00New int;
+declare @HR00Old int;
+declare @HR01New int;
+declare @HR01Old int;
+declare @HR02New int;
+declare @HR02Old int;
+declare @HR03New int;
+declare @HR03Old int;
+declare @HR04New int;
+declare @HR04Old int;
+declare @HR05New int;
+declare @HR05Old int;
+declare @HR06New int;
+declare @HR06Old int;
+declare @HR07New int;
+declare @HR07Old int;
+declare @HR08New int;
+declare @HR08Old int;
+declare @HR09New int;
+declare @HR09Old int;
+declare @HR0ANew int;
+declare @HR0AOld int;
+declare @HR0BNew int;
+declare @HR0BOld int;
+declare @HR0CNew int;
+declare @HR0COld int;
+declare @HR0DNew int;
+declare @HR0DOld int;
+declare @HR0ENew int;
+declare @HR0EOld int;
+declare @HR0FNew int;
+declare @HR0FOld int;
+declare @HR10New int;
+declare @HR10Old int;
+declare @HR11New int;
+declare @HR11Old int;
+declare @HR12New int;
+declare @HR12Old int;
+declare @HR13New int;
+declare @HR13Old int;
+declare @HR14New int;
+declare @HR14Old int;
+declare @HR15New int;
+declare @HR15Old int;
+declare @HR16New int;
+declare @HR16Old int;
+declare @HR17New int;
+declare @HR17Old int;
+declare @HR18New int;
+declare @HR18Old int;
+declare @HR19New int;
+declare @HR19Old int;
+declare @HR1ANew int;
+declare @HR1AOld int;
+declare @HR1BNew int;
+declare @HR1BOld int;
+declare @HR1CNew int;
+declare @HR1COld int;
+declare @HR1DNew int;
+declare @HR1DOld int;
+declare @HR1ENew int;
+declare @HR1EOld int;
+declare @HR1FNew int;
+declare @HR1FOld int;
+declare @HR20New int;
+declare @HR20Old int;
+declare @HR21New int;
+declare @HR21Old int;
+declare @HR22New int;
+declare @HR22Old int;
+declare @HR23New int;
+declare @HR23Old int;
+declare @HR24New int;
+declare @HR24Old int;
+declare @HR25New int;
+declare @HR25Old int;
+declare @HR26New int;
+declare @HR26Old int;
+declare @HR27New int;
+declare @HR27Old int;
+declare @HR28New int;
+declare @HR28Old int;
+declare @HR29New int;
+declare @HR29Old int;
+declare @HR2ANew int;
+declare @HR2AOld int;
+declare @HR2BNew int;
+declare @HR2BOld int;
+declare @HR2CNew int;
+declare @HR2COld int;
+declare @HR2DNew int;
+declare @HR2DOld int;
+declare @HR2ENew int;
+declare @HR2EOld int;
+declare @HR2FNew int;
+declare @HR2FOld int;
+declare @HR30New int;
+declare @HR30Old int;
+declare @HR31New int;
+declare @HR31Old int;
+declare @HR32New int;
+declare @HR32Old int;
+declare @HR33New int;
+declare @HR33Old int;
+declare @HR34New int;
+declare @HR34Old int;
+declare @HR35New int;
+declare @HR35Old int;
+declare @HR36New int;
+declare @HR36Old int;
+declare @HR37New int;
+declare @HR37Old int;
+declare @HR38New int;
+declare @HR38Old int;
+declare @HR39New int;
+declare @HR39Old int;
+declare @HR3ANew int;
+declare @HR3AOld int;
+declare @HR3BNew int;
+declare @HR3BOld int;
+declare @HR3CNew int;
+declare @HR3COld int;
+set @OverpassNew=(select [Overpass] from INSERTED);
+set @OverpassOld=(select [Overpass] from DELETED);
+set @WayNew=(select [Way] from INSERTED);
+set @WayOld=(select [Way] from DELETED);
+set @ProductNew=(select [Product] from INSERTED);
+set @ProductOld=(select [Product] from DELETED);
+set @RiserNew=(select [Riser] from INSERTED);
+set @RiserOld=(select [Riser] from DELETED);
+set @IpAddressNew=(select [IpAddress] from INSERTED);
+set @IpAddressOld=(select [IpAddress] from DELETED);
+set @IpPortNew=(select [IpPort] from INSERTED);
+set @IpPortOld=(select [IpPort] from DELETED);
+set @NodeNew=(select [Node] from INSERTED);
+set @NodeOld=(select [Node] from DELETED);
+set @FuncNew=(select [Func] from INSERTED);
+set @FuncOld=(select [Func] from DELETED);
+set @ActiveNew=(select [Active] from INSERTED);
+set @ActiveOld=(select [Active] from DELETED);
+set @NumberNew=(select [Number] from INSERTED);
+set @NumberOld=(select [Number] from DELETED);
+set @NTypeNew=(select [NType] from INSERTED);
+set @NTypeOld=(select [NType] from DELETED);
+set @SnapTimeNew=(select [SnapTime] from INSERTED);
+set @SnapTimeOld=(select [SnapTime] from DELETED);
+set @HR00New=(select [HR00] from INSERTED);
+set @HR00Old=(select [HR00] from DELETED);
+set @HR01New=(select [HR01] from INSERTED);
+set @HR01Old=(select [HR01] from DELETED);
+set @HR02New=(select [HR02] from INSERTED);
+set @HR02Old=(select [HR02] from DELETED);
+set @HR03New=(select [HR03] from INSERTED);
+set @HR03Old=(select [HR03] from DELETED);
+set @HR04New=(select [HR04] from INSERTED);
+set @HR04Old=(select [HR04] from DELETED);
+set @HR05New=(select [HR05] from INSERTED);
+set @HR05Old=(select [HR05] from DELETED);
+set @HR06New=(select [HR06] from INSERTED);
+set @HR06Old=(select [HR06] from DELETED);
+set @HR07New=(select [HR07] from INSERTED);
+set @HR07Old=(select [HR07] from DELETED);
+set @HR08New=(select [HR08] from INSERTED);
+set @HR08Old=(select [HR08] from DELETED);
+set @HR09New=(select [HR09] from INSERTED);
+set @HR09Old=(select [HR09] from DELETED);
+set @HR0ANew=(select [HR0A] from INSERTED);
+set @HR0AOld=(select [HR0A] from DELETED);
+set @HR0BNew=(select [HR0B] from INSERTED);
+set @HR0BOld=(select [HR0B] from DELETED);
+set @HR0CNew=(select [HR0C] from INSERTED);
+set @HR0COld=(select [HR0C] from DELETED);
+set @HR0DNew=(select [HR0D] from INSERTED);
+set @HR0DOld=(select [HR0D] from DELETED);
+set @HR0ENew=(select [HR0E] from INSERTED);
+set @HR0EOld=(select [HR0E] from DELETED);
+set @HR0FNew=(select [HR0F] from INSERTED);
+set @HR0FOld=(select [HR0F] from DELETED);
+set @HR10New=(select [HR10] from INSERTED);
+set @HR10Old=(select [HR10] from DELETED);
+set @HR11New=(select [HR11] from INSERTED);
+set @HR11Old=(select [HR11] from DELETED);
+set @HR12New=(select [HR12] from INSERTED);
+set @HR12Old=(select [HR12] from DELETED);
+set @HR13New=(select [HR13] from INSERTED);
+set @HR13Old=(select [HR13] from DELETED);
+set @HR14New=(select [HR14] from INSERTED);
+set @HR14Old=(select [HR14] from DELETED);
+set @HR15New=(select [HR15] from INSERTED);
+set @HR15Old=(select [HR15] from DELETED);
+set @HR16New=(select [HR16] from INSERTED);
+set @HR16Old=(select [HR16] from DELETED);
+set @HR17New=(select [HR17] from INSERTED);
+set @HR17Old=(select [HR17] from DELETED);
+set @HR18New=(select [HR18] from INSERTED);
+set @HR18Old=(select [HR18] from DELETED);
+set @HR19New=(select [HR19] from INSERTED);
+set @HR19Old=(select [HR19] from DELETED);
+set @HR1ANew=(select [HR1A] from INSERTED);
+set @HR1AOld=(select [HR1A] from DELETED);
+set @HR1BNew=(select [HR1B] from INSERTED);
+set @HR1BOld=(select [HR1B] from DELETED);
+set @HR1CNew=(select [HR1C] from INSERTED);
+set @HR1COld=(select [HR1C] from DELETED);
+set @HR1DNew=(select [HR1D] from INSERTED);
+set @HR1DOld=(select [HR1D] from DELETED);
+set @HR1ENew=(select [HR1E] from INSERTED);
+set @HR1EOld=(select [HR1E] from DELETED);
+set @HR1FNew=(select [HR1F] from INSERTED);
+set @HR1FOld=(select [HR1F] from DELETED);
+set @HR20New=(select [HR20] from INSERTED);
+set @HR20Old=(select [HR20] from DELETED);
+set @HR21New=(select [HR21] from INSERTED);
+set @HR21Old=(select [HR21] from DELETED);
+set @HR22New=(select [HR22] from INSERTED);
+set @HR22Old=(select [HR22] from DELETED);
+set @HR23New=(select [HR23] from INSERTED);
+set @HR23Old=(select [HR23] from DELETED);
+set @HR24New=(select [HR24] from INSERTED);
+set @HR24Old=(select [HR24] from DELETED);
+set @HR25New=(select [HR25] from INSERTED);
+set @HR25Old=(select [HR25] from DELETED);
+set @HR26New=(select [HR26] from INSERTED);
+set @HR26Old=(select [HR26] from DELETED);
+set @HR27New=(select [HR27] from INSERTED);
+set @HR27Old=(select [HR27] from DELETED);
+set @HR28New=(select [HR28] from INSERTED);
+set @HR28Old=(select [HR28] from DELETED);
+set @HR29New=(select [HR29] from INSERTED);
+set @HR29Old=(select [HR29] from DELETED);
+set @HR2ANew=(select [HR2A] from INSERTED);
+set @HR2AOld=(select [HR2A] from DELETED);
+set @HR2BNew=(select [HR2B] from INSERTED);
+set @HR2BOld=(select [HR2B] from DELETED);
+set @HR2CNew=(select [HR2C] from INSERTED);
+set @HR2COld=(select [HR2C] from DELETED);
+set @HR2DNew=(select [HR2D] from INSERTED);
+set @HR2DOld=(select [HR2D] from DELETED);
+set @HR2ENew=(select [HR2E] from INSERTED);
+set @HR2EOld=(select [HR2E] from DELETED);
+set @HR2FNew=(select [HR2F] from INSERTED);
+set @HR2FOld=(select [HR2F] from DELETED);
+set @HR30New=(select [HR30] from INSERTED);
+set @HR30Old=(select [HR30] from DELETED);
+set @HR31New=(select [HR31] from INSERTED);
+set @HR31Old=(select [HR31] from DELETED);
+set @HR32New=(select [HR32] from INSERTED);
+set @HR32Old=(select [HR32] from DELETED);
+set @HR33New=(select [HR33] from INSERTED);
+set @HR33Old=(select [HR33] from DELETED);
+set @HR34New=(select [HR34] from INSERTED);
+set @HR34Old=(select [HR34] from DELETED);
+set @HR35New=(select [HR35] from INSERTED);
+set @HR35Old=(select [HR35] from DELETED);
+set @HR36New=(select [HR36] from INSERTED);
+set @HR36Old=(select [HR36] from DELETED);
+set @HR37New=(select [HR37] from INSERTED);
+set @HR37Old=(select [HR37] from DELETED);
+set @HR38New=(select [HR38] from INSERTED);
+set @HR38Old=(select [HR38] from DELETED);
+set @HR39New=(select [HR39] from INSERTED);
+set @HR39Old=(select [HR39] from DELETED);
+set @HR3ANew=(select [HR3A] from INSERTED);
+set @HR3AOld=(select [HR3A] from DELETED);
+set @HR3BNew=(select [HR3B] from INSERTED);
+set @HR3BOld=(select [HR3B] from DELETED);
+set @HR3CNew=(select [HR3C] from INSERTED);
+set @HR3COld=(select [HR3C] from DELETED);
+update [FETCHING] set [SnapTime]=getdate()
+where [Overpass] = @OverpassOld AND [Way] = @WayOld AND [Product] = @ProductOld AND [Riser] = @RiserOld AND @SnapTimeNew = @SnapTimeOld AND
+(@IpAddressNew <> @IpAddressOld OR @IpPortNew <> @IpPortOld OR @NodeNew <> @NodeOld OR @FuncNew <> @FuncOld OR @ActiveNew <> @ActiveOld OR @NumberNew <> @NumberOld OR @NTypeNew <> @NTypeOld OR
+@HR00New <> @HR00Old OR @HR01New <> @HR01Old OR @HR02New <> @HR02Old OR @HR03New <> @HR03Old OR @HR04New <> @HR04Old OR @HR05New <> @HR05Old OR @HR06New <> @HR06Old OR
+@HR07New <> @HR07Old OR @HR08New <> @HR08Old OR @HR09New <> @HR09Old OR @HR0ANew <> @HR0AOld OR @HR0BNew <> @HR0BOld OR @HR0CNew <> @HR0COld OR @HR0DNew <> @HR0DOld OR 
+@HR0ENew <> @HR0EOld OR @HR0FNew <> @HR0FOld OR @HR10New <> @HR10Old OR @HR11New <> @HR11Old OR @HR12New <> @HR12Old OR @HR13New <> @HR13Old OR @HR14New <> @HR14Old OR 
+@HR15New <> @HR15Old OR @HR16New <> @HR16Old OR @HR17New <> @HR17Old OR @HR18New <> @HR18Old OR @HR19New <> @HR19Old OR @HR1ANew <> @HR1AOld OR @HR1BNew <> @HR1BOld OR 
+@HR1CNew <> @HR1COld OR @HR1DNew <> @HR1DOld OR @HR1ENew <> @HR1EOld OR @HR1FNew <> @HR1FOld OR @HR20New <> @HR20Old OR @HR21New <> @HR21Old OR @HR22New <> @HR22Old OR 
+@HR23New <> @HR23Old OR @HR24New <> @HR24Old OR @HR25New <> @HR25Old OR @HR26New <> @HR26Old OR @HR27New <> @HR27Old OR @HR28New <> @HR28Old OR @HR29New <> @HR29Old OR 
+@HR2ANew <> @HR2AOld OR @HR2BNew <> @HR2BOld OR @HR2CNew <> @HR2COld OR @HR2DNew <> @HR2DOld OR @HR2ENew <> @HR2EOld OR @HR2FNew <> @HR2FOld OR @HR30New <> @HR30Old OR 
+@HR31New <> @HR31Old OR @HR32New <> @HR32Old OR @HR33New <> @HR33Old OR @HR34New <> @HR34Old OR @HR35New <> @HR35Old OR @HR36New <> @HR36Old OR @HR37New <> @HR37Old OR 
+@HR38New <> @HR38Old OR @HR39New <> @HR39Old OR @HR3ANew <> @HR3AOld OR @HR3BNew <> @HR3BOld OR @HR3CNew <> @HR3COld)
+--
+	declare @StopCountNew int;
+	declare @StopCountOld int;
+	declare @Category nvarchar(255);
+	declare @EventInfo nvarchar(255);
+	set @StopCountNew = @HR01New & 0xff;
+	set @StopCountOld = @HR01Old & 0xff;
+	IF @StopCountNew > @StopCountOld
+	BEGIN
+		declare @cnt int;
+		set @cnt=0;
+		WHILE @cnt < 16
+		BEGIN
+			IF @HR02New & power(2, @cnt) > 0
+			BEGIN
+				set @Category = 'Filled'; 
+				set @EventInfo = (select [Reason] from [dbo].[STOPREASONS] where [Id]=@cnt);
+				IF @cnt <> 13 AND @cnt <> 14
+				BEGIN
+				  set @Category = 'Error';
+				  set @EventInfo = 'Налив завешён аварийно. ' + @EventInfo; 
+				END;
+				INSERT INTO [LOGREPORT] ([Snaptime],[Overpass],[Way],[Product],[Riser],[Category],[EventInfo],[Number],[NType],[MaxHeight],[Source],[SetLevel]) 
+				VALUES(getdate(),@OverpassNew,@WayNew,@ProductNew,@RiserNew,@Category,@EventInfo,'',0,0,'',0)
+			END;
+			set @cnt = @cnt + 1; 
+		END;
+	END;
+END

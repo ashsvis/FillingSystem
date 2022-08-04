@@ -1,0 +1,364 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5685E7EC-E942-4BE0-A4A7-881BCC42B0CC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FillingSystemViewHelper</RootNamespace>
+    <AssemblyName>FillingSystemViewHelper</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>FillingSystemViewHelper.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CloseFormEventArgs.cs" />
+    <Compile Include="DialogOkUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DialogOkUserControl.Designer.cs">
+      <DependentUpon>DialogOkUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WorklogFilterEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WorklogFilterEditorForm.designer.cs">
+      <DependentUpon>WorklogFilterEditorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LogReport\LogReportItem.cs" />
+    <Compile Include="LogReport\LogReportUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LogReport\LogReportUserControl.Designer.cs">
+      <DependentUpon>LogReportUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operators\CheckPasswordEventArgs.cs" />
+    <Compile Include="Operators\OperatorLoginForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Operators\OperatorLoginForm.designer.cs">
+      <DependentUpon>OperatorLoginForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operators\OperatorUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Operators\OperatorUserControl.Designer.cs">
+      <DependentUpon>OperatorUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operators\OperatorDataEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Operators\OperatorDataEditorForm.designer.cs">
+      <DependentUpon>OperatorDataEditorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Risers\ProductItem.cs" />
+    <Compile Include="Risers\RiserConfigEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Risers\RiserConfigEditorForm.Designer.cs">
+      <DependentUpon>RiserConfigEditorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Risers\RiserConfigUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Risers\RiserConfigUserControl.Designer.cs">
+      <DependentUpon>RiserConfigUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tasks\TaskDataEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tasks\TaskDataEditorForm.designer.cs">
+      <DependentUpon>TaskDataEditorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tuning\IFetchUpdate.cs" />
+    <Compile Include="Tuning\RiserTuningAdcControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Tuning\RiserTuningAdcControl.designer.cs">
+      <DependentUpon>RiserTuningAdcControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tuning\RiserTuningAlarmLevelControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Tuning\RiserTuningAlarmLevelControl.designer.cs">
+      <DependentUpon>RiserTuningAlarmLevelControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tuning\RiserTuningAnalogLevelControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Tuning\RiserTuningAnalogLevelControl.designer.cs">
+      <DependentUpon>RiserTuningAnalogLevelControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tuning\RiserTuningForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tuning\RiserTuningForm.designer.cs">
+      <DependentUpon>RiserTuningForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tuning\RiserTuningLinkControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Tuning\RiserTuningLinkControl.designer.cs">
+      <DependentUpon>RiserTuningLinkControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tuning\RiserTuningPlcControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Tuning\RiserTuningPlcControl.designer.cs">
+      <DependentUpon>RiserTuningPlcControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Wagons\GetWagonTypesEventArgs.cs" />
+    <Compile Include="Wagons\TaskEventArgs.cs" />
+    <Compile Include="Wagons\WagonEventArgs.cs" />
+    <Compile Include="Wagons\WagonDataEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Wagons\WagonDataEditorForm.designer.cs">
+      <DependentUpon>WagonDataEditorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Wagons\WagonUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Wagons\WagonUserControl.Designer.cs">
+      <DependentUpon>WagonUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WagonTypes\WagonTypeDataEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WagonTypes\WagonTypeDataEditorForm.designer.cs">
+      <DependentUpon>WagonTypeDataEditorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Risers\ProductNode.cs" />
+    <Compile Include="Risers\ProductsEventArgs.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="RiserNodes\RiserControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="RiserNodes\RiserControl.designer.cs">
+      <DependentUpon>RiserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DialogYesNoUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DialogYesNoUserControl.Designer.cs">
+      <DependentUpon>DialogYesNoUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FillingPageUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FillingPageUserControl.Designer.cs">
+      <DependentUpon>FillingPageUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operations.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RiserNodes\RiserNode.cs" />
+    <Compile Include="RiserNodes\RiserPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RiserNodes\RiserPanel.designer.cs">
+      <DependentUpon>RiserPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RiserNodes\RiserStatusControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RiserNodes\RiserStatusControl.designer.cs">
+      <DependentUpon>RiserStatusControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Risers\StatusControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Risers\StatusControl.designer.cs">
+      <DependentUpon>StatusControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Risers\StatusForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Risers\StatusForm.designer.cs">
+      <DependentUpon>StatusForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WagonTypes\WagonTypeEventArgs.cs" />
+    <Compile Include="WagonTypes\WagonTypeUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WagonTypes\WagonTypeUserControl.Designer.cs">
+      <DependentUpon>WagonTypeUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ChannelSegments\WaySelection.cs" />
+    <Compile Include="Tuning\WriteDataEventArgs.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DialogOkUserControl.resx">
+      <DependentUpon>DialogOkUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WorklogFilterEditorForm.resx">
+      <DependentUpon>WorklogFilterEditorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LogReport\LogReportUserControl.resx">
+      <DependentUpon>LogReportUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Operators\OperatorLoginForm.resx">
+      <DependentUpon>OperatorLoginForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Operators\OperatorUserControl.resx">
+      <DependentUpon>OperatorUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Operators\OperatorDataEditorForm.resx">
+      <DependentUpon>OperatorDataEditorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Risers\RiserConfigEditorForm.resx">
+      <DependentUpon>RiserConfigEditorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Risers\RiserConfigUserControl.resx">
+      <DependentUpon>RiserConfigUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tasks\TaskDataEditorForm.resx">
+      <DependentUpon>TaskDataEditorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tuning\RiserTuningAdcControl.resx">
+      <DependentUpon>RiserTuningAdcControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tuning\RiserTuningAlarmLevelControl.resx">
+      <DependentUpon>RiserTuningAlarmLevelControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tuning\RiserTuningAnalogLevelControl.resx">
+      <DependentUpon>RiserTuningAnalogLevelControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tuning\RiserTuningForm.resx">
+      <DependentUpon>RiserTuningForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tuning\RiserTuningLinkControl.resx">
+      <DependentUpon>RiserTuningLinkControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tuning\RiserTuningPlcControl.resx">
+      <DependentUpon>RiserTuningPlcControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Wagons\WagonDataEditorForm.resx">
+      <DependentUpon>WagonDataEditorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Wagons\WagonUserControl.resx">
+      <DependentUpon>WagonUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WagonTypes\WagonTypeDataEditorForm.resx">
+      <DependentUpon>WagonTypeDataEditorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RiserNodes\RiserControl.resx">
+      <DependentUpon>RiserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DialogYesNoUserControl.resx">
+      <DependentUpon>DialogYesNoUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FillingPageUserControl.resx">
+      <DependentUpon>FillingPageUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RiserNodes\RiserPanel.resx">
+      <DependentUpon>RiserPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RiserNodes\RiserStatusControl.resx">
+      <DependentUpon>RiserStatusControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Risers\StatusForm.resx">
+      <DependentUpon>StatusForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WagonTypes\WagonTypeUserControl.resx">
+      <DependentUpon>WagonTypeUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FillingSystemHelper\FillingSystemHelper.csproj">
+      <Project>{352254ff-e204-4021-b435-3abd326a4f0a}</Project>
+      <Name>FillingSystemHelper</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="FillingSystemViewHelper.snk" />
+    <None Include="Resources\flow_big.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\flow_small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ground_green.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ground_red.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hand_red.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\throat.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\waggon.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
