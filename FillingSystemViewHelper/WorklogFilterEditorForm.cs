@@ -246,9 +246,17 @@ namespace FillingSystemViewHelper
         {
             cbStartedTime.Checked = false;
             cbEndedTime.Checked = false;
+            dtpStartDate.MinDate = CommonData.MinRangeDate();
+            dtpStartDate.MaxDate = CommonData.MaxRangeDate();
             dtpStartDate.Value = CommonData.MinRangeDate();
+            dtpStartTime.MinDate = CommonData.MinRangeDate();
+            dtpStartTime.MaxDate = CommonData.MaxRangeDate();
             dtpStartTime.Value = CommonData.MinRangeDate();
+            dtpEndDate.MinDate = CommonData.MinRangeDate();
+            dtpEndDate.MaxDate = CommonData.MaxRangeDate();
             dtpEndDate.Value = CommonData.MaxRangeDate();
+            dtpEndTime.MinDate = CommonData.MinRangeDate();
+            dtpEndTime.MaxDate = CommonData.MaxRangeDate();
             dtpEndTime.Value = CommonData.MaxRangeDate();
         }
 

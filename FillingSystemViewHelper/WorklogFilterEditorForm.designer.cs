@@ -454,37 +454,47 @@
             // 
             this.dtpEndTime.Format = System.Windows.Forms.DateTimePickerFormat.Time;
             this.dtpEndTime.Location = new System.Drawing.Point(441, 62);
+            this.dtpEndTime.MaxDate = new System.DateTime(2099, 12, 31, 0, 0, 0, 0);
+            this.dtpEndTime.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
             this.dtpEndTime.Name = "dtpEndTime";
             this.dtpEndTime.ShowUpDown = true;
-            this.dtpEndTime.Size = new System.Drawing.Size(76, 25);
+            this.dtpEndTime.Size = new System.Drawing.Size(96, 25);
             this.dtpEndTime.TabIndex = 5;
-            this.dtpEndTime.Value = new System.DateTime(2017, 7, 11, 23, 59, 0, 0);
+            this.dtpEndTime.Value = new System.DateTime(2022, 8, 4, 23, 59, 59, 0);
             this.dtpEndTime.ValueChanged += new System.EventHandler(this.DataChanged);
             // 
             // dtpStartTime
             // 
             this.dtpStartTime.Format = System.Windows.Forms.DateTimePickerFormat.Time;
             this.dtpStartTime.Location = new System.Drawing.Point(441, 31);
+            this.dtpStartTime.MaxDate = new System.DateTime(2099, 12, 31, 0, 0, 0, 0);
+            this.dtpStartTime.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
             this.dtpStartTime.Name = "dtpStartTime";
             this.dtpStartTime.ShowUpDown = true;
-            this.dtpStartTime.Size = new System.Drawing.Size(76, 25);
+            this.dtpStartTime.Size = new System.Drawing.Size(96, 25);
             this.dtpStartTime.TabIndex = 2;
             this.dtpStartTime.Value = new System.DateTime(2017, 7, 11, 0, 0, 0, 0);
             this.dtpStartTime.ValueChanged += new System.EventHandler(this.DataChanged);
             // 
             // dtpEndDate
             // 
-            this.dtpEndDate.Location = new System.Drawing.Point(233, 62);
+            this.dtpEndDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpEndDate.Location = new System.Drawing.Point(334, 62);
+            this.dtpEndDate.MaxDate = new System.DateTime(2099, 12, 31, 0, 0, 0, 0);
+            this.dtpEndDate.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
             this.dtpEndDate.Name = "dtpEndDate";
-            this.dtpEndDate.Size = new System.Drawing.Size(200, 25);
+            this.dtpEndDate.Size = new System.Drawing.Size(99, 25);
             this.dtpEndDate.TabIndex = 4;
             this.dtpEndDate.ValueChanged += new System.EventHandler(this.DataChanged);
             // 
             // dtpStartDate
             // 
-            this.dtpStartDate.Location = new System.Drawing.Point(233, 31);
+            this.dtpStartDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpStartDate.Location = new System.Drawing.Point(334, 31);
+            this.dtpStartDate.MaxDate = new System.DateTime(2099, 12, 31, 0, 0, 0, 0);
+            this.dtpStartDate.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
             this.dtpStartDate.Name = "dtpStartDate";
-            this.dtpStartDate.Size = new System.Drawing.Size(200, 25);
+            this.dtpStartDate.Size = new System.Drawing.Size(99, 25);
             this.dtpStartDate.TabIndex = 1;
             this.dtpStartDate.ValueChanged += new System.EventHandler(this.DataChanged);
             // 

@@ -1,5 +1,6 @@
 ﻿using FillingSystemHelper;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -9,91 +10,24 @@ using System.Windows.Forms;
 
 namespace FillingSystemViewHelper
 {
+
     public partial class WagonUserControl : UserControl
     {
-        private int _rowIndex = -1;
-        private DataTable table;
         private Point editorFormLocation;
+        public FillingSqlServer SqlServer { get; internal set; }
 
         public WagonUserControl()
         {
             InitializeComponent();
-            table = new DataTable();
-            table.Columns.Add(new DataColumn("Номер вагона-цистерны", typeof(string)));
-            table.Columns.Add(new DataColumn("Тип", typeof(int)));
-            table.Columns.Add(new DataColumn("Фактическая высота", typeof(int)));
-            table.Columns.Add(new DataColumn("Количество наливов", typeof(int)));
-            dataGridView1.DataSource = table;
+            lvTable.Columns.Add(new ColumnHeader() { Text = "Вагон", Width = 80, TextAlign = HorizontalAlignment.Center });
+            lvTable.Columns.Add(new ColumnHeader() { Text = "Тип", Width = 60, TextAlign = HorizontalAlignment.Center });
+            lvTable.Columns.Add(new ColumnHeader() { Text = "Фактическая высота", Width = 140, TextAlign = HorizontalAlignment.Right });
+            lvTable.Columns.Add(new ColumnHeader() { Text = "Количество наливов", Width = 140, TextAlign = HorizontalAlignment.Right });
         }
 
         private void WagonUserControl_Load(object sender, EventArgs e)
         {
-            UpdateWaggonList();
-        }
-
-        public void UpdateWaggonList(int rowindex = -1)
-        {
-            if (rowindex >= 0 && dataGridView1.Rows.Count > 0 && rowindex < dataGridView1.Rows.Count)
-                dataGridView1.CurrentCell = dataGridView1[0, rowindex];
-        }
-
-        public async Task BuildAsync(DataTable data, string nUmber = null)
-        {
-            table.Rows.Clear();
-            if (data == null) return;
-            await Task.Run(() => 
-            {
-                foreach (var row in data.Rows.Cast<DataRow>())
-                {
-                    var number = (string)row["Number"];
-                    var nType = (int)row["NType"];
-                    var realHeight = (int)row["RealHeight"];
-                    var fillCount = (int)row["FillCount"];
-                    table.Rows.Add(number, nType, realHeight, fillCount);
-                }
-            });
-            if (nUmber != null)
-            {
-                for (var i = 0; i < dataGridView1.Rows.Count; i++)
-                {
-                    if (nUmber == (string)dataGridView1[0, i].Value)
-                    {
-                        dataGridView1.CurrentCell = dataGridView1[0, i];
-                        break;
-                    }
-                }
-            }
-        }
-
-        public void Build(DataTable data, string nUmber = null)
-        {
-            table.Rows.Clear();
-            if (data == null) return;
-            foreach (var row in data.Rows.Cast<DataRow>())
-            {
-                var number = (string)row["Number"];
-                var nType = (int)row["NType"];
-                var realHeight = (int)row["RealHeight"];
-                var fillCount = (int)row["FillCount"];
-                table.Rows.Add(number, nType, realHeight, fillCount);
-            }
-            if (nUmber != null)
-            {
-                for (var i = 0; i < dataGridView1.Rows.Count; i++)
-                {
-                    if (nUmber == (string)dataGridView1[0, i].Value)
-                    {
-                        dataGridView1.CurrentCell = dataGridView1[0, i];
-                        break;
-                    }
-                }
-            }
-        }
-
-        private void dataGridView1_RowEnter(object sender, DataGridViewCellEventArgs e)
-        {
-            CloseEditorForm();
-            _rowIndex = e.RowIndex;
+            lvTable.VirtualListSize = SqlServer.GetWagonsRowsCount();
         }
 
         private void miAddWaggon_Click(object sender, EventArgs e)
@@ -103,7 +37,10 @@ namespace FillingSystemViewHelper
 
         private void miEditWaggon_Click(object sender, EventArgs e)
         {
-            ShowWaggonEditDialog(_rowIndex);
+            if (!CommonData.EnteredAsAdmin()) return;
+            if (lvTable.SelectedIndices.Count == 0) return;
+            var index = lvTable.SelectedIndices[0];
+            ShowWaggonEditDialog(index);
         }
 
         private void miDeleteWaggon_Click(object sender, EventArgs e)
@@ -118,14 +55,16 @@ namespace FillingSystemViewHelper
                 e.Cancel = true;
                 return;
             }
-            miEditWaggon.Enabled = dataGridView1.Rows.Count > 0;
-            miDeleteWaggon.Enabled = dataGridView1.Rows.Count > 0;
+            miEditWaggon.Enabled = lvTable.VirtualListSize > 0;
+            miDeleteWaggon.Enabled = lvTable.VirtualListSize > 0;
         }
 
-        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void lvTable_DoubleClick(object sender, EventArgs e)
         {
-            if (CommonData.EnteredAsAdmin())
-                ShowWaggonEditDialog(e.RowIndex);
+            if (!CommonData.EnteredAsAdmin()) return;
+            if (lvTable.SelectedIndices.Count == 0) return;
+            var index = lvTable.SelectedIndices[0];
+            ShowWaggonEditDialog(index);
         }
 
         private void ShowWaggonInsertDialog()
@@ -140,13 +79,16 @@ namespace FillingSystemViewHelper
 
             editorForm.OnOk += (o, e) =>
             {
-                onCreate?.Invoke(this, new WagonEventArgs()
+                if (SqlServer.InsertIntoWagons(e.Number, e.Ntype, e.RealHeight))
                 {
-                    Number = e.Number,
-                    Ntype = e.Ntype,
-                    RealHeight = e.RealHeight
-                });
-                UpdateWaggonList();
+                    lvTable.VirtualListSize = SqlServer.GetWagonsRowsCount();
+                    lvTable.Invalidate();
+                    var lvi = lvTable.FindItemWithText(e.Number);
+                    lvTable.SelectedIndices.Clear();
+                    lvTable.SelectedIndices.Add(lvi.Index);
+                    lvi.Focused = true;
+                    lvi.EnsureVisible();
+                }
                 editorForm.Close();
             };
 
@@ -154,77 +96,60 @@ namespace FillingSystemViewHelper
 
         }
 
-        private event WagonEventHandler onCreate;
-
-        public event WagonEventHandler OnCreate
+        private void lvTable_SearchForVirtualItem(object sender, SearchForVirtualItemEventArgs e)
         {
-            add
-            {
-                onCreate += value;
-            }
-            remove
-            {
-                onCreate -= value;
-            }
+            var index = SqlServer.GetWagonIndex(e.Text);
+            e.Index = index - 1;
         }
 
-        private void ShowWaggonEditDialog(int rowIndex)
+        private void ShowWaggonEditDialog(int index)
         {
             CloseEditorForm();
-            if (rowIndex >= 0 && dataGridView1.Rows.Count > 0 && rowIndex < dataGridView1.Rows.Count)
+            if (index >= 0 && lvTable.VirtualListSize > 0 && index < lvTable.VirtualListSize)
             {
-                var number = (string)dataGridView1[0, rowIndex].Value;
-                var ntype = (int)dataGridView1[1, rowIndex].Value;
-                var realHeight = (int)dataGridView1[2, rowIndex].Value;
-                var fillCount = (int)dataGridView1[3, rowIndex].Value;
-
-                var editorForm = new WagonDataEditorForm() { Location = editorFormLocation };
-                editorForm.OnGetWagonTypes += (o, e) => onGetWagonTypes?.Invoke(o, e);
-                editorForm.Update(true, number, ntype, realHeight, fillCount);
-                editorForm.Show(this);
-
-                editorForm.OnCancel += (o, e) => editorForm.Close();
-
-
-                editorForm.OnOk += (o, e) =>
+                var data = SqlServer.GetWagons(index, 1);
+                foreach (var row in data.Rows.Cast<DataRow>())
                 {
-                    onChange?.Invoke(this, new WagonEventArgs()
+                    var number = (string)row["Number"];
+                    var ntype = (int)row["NType"];
+                    var realHeight = (int)row["RealHeight"];
+                    var fillCount = (int)row["FillCount"];
+                    var editorForm = new WagonDataEditorForm() { Location = editorFormLocation };
+                    editorForm.OnGetWagonTypes += (o, e) => onGetWagonTypes?.Invoke(o, e);
+                    editorForm.Update(true, number, ntype, realHeight, fillCount);
+                    editorForm.Show(this);
+
+                    editorForm.OnCancel += (o, e) => editorForm.Close();
+
+                    editorForm.OnOk += (o, e) =>
                     {
-                        Number = e.Number,
-                        Ntype = e.Ntype,
-                        RealHeight = e.RealHeight
-                    });
-                    UpdateWaggonList(rowIndex);
-                    editorForm.Close();
-                };
+                        if (SqlServer.UpdateIntoWagons(e.Number, e.Ntype, e.RealHeight))
+                        {
+                            lvTable.VirtualListSize = SqlServer.GetWagonsRowsCount();
+                            lvTable.Invalidate();
+                        }
+                        editorForm.Close();
+                    };
 
-                editorForm.OnCloseForm += (o, e) => editorFormLocation = e.Location;
+                    editorForm.OnCloseForm += (o, e) => editorFormLocation = e.Location;
+                    break;
+                }
 
-            }
-        }
-
-        private event WagonEventHandler onChange;
-
-        public event WagonEventHandler OnChange
-        {
-            add
-            {
-                onChange += value;
-            }
-            remove
-            {
-                onChange -= value;
             }
         }
 
         private void ShowWaggonDeleteDialog()
         {
-            if (_rowIndex < 0) return;
-            var number = (string)dataGridView1[0, _rowIndex].Value;
+            if (lvTable.SelectedIndices.Count == 0) return;
+            var index = lvTable.SelectedIndices[0];           
+            var number = SqlServer.GetWagon(index);
             onDelete?.Invoke(this, new WagonEventArgs()
             {
                 Number = number
             });
+            lvTable.VirtualListSize = 0;
+            lvTable.VirtualListSize = SqlServer.GetWagonsRowsCount();
+            lvTable.Invalidate();
         }
 
         private event WagonEventHandler onDelete;
@@ -265,6 +190,43 @@ namespace FillingSystemViewHelper
             {
                 onGetWagonTypes -= value;
             }
+        }
+
+        private Dictionary<int, DataRow> cash = new Dictionary<int, DataRow>();
+
+        private void lvTable_CacheVirtualItems(object sender, CacheVirtualItemsEventArgs e)
+        {
+            var data = SqlServer.GetWagons(e.StartIndex, e.EndIndex + 1);
+            cash.Clear();
+            var n = e.StartIndex;
+            foreach (var row in data.Rows.Cast<DataRow>())
+            {
+                cash.Add(n, row);
+                n++;
+            }
+        }
+
+        private void lvTable_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
+        {
+            var lvi = new ListViewItem();
+            lvi.SubItems.AddRange(new string[] { "", "", "" });
+            e.Item = lvi;
+            if ((e.ItemIndex % 2) == 1)
+            {
+                e.Item.BackColor = Color.FromArgb(227, 227, 227);
+                e.Item.UseItemStyleForSubItems = true;
+            }
+            if (cash.Count == 0 || !cash.ContainsKey(e.ItemIndex))
+                return;
+            var row = cash[e.ItemIndex];
+            var number = (string)row["Number"];
+            var ntype = (int)row["NType"];
+            var realHeight = (int)row["RealHeight"];
+            var fillCount = (int)row["FillCount"];
+            lvi.Text = $"{number}";
+            lvi.SubItems[1].Text = $"{ntype}";
+            lvi.SubItems[2].Text = $"{realHeight}";
+            lvi.SubItems[3].Text = $"{fillCount}";
         }
     }
 }

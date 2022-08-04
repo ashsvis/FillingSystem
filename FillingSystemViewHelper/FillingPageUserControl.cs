@@ -673,31 +673,13 @@ namespace FillingSystemViewHelper
             ShowWagonsPage();
         }
 
-        private async void ShowWagonsPage()
+        private void ShowWagonsPage()
         {
             Cursor = Cursors.WaitCursor;
             try
             {
                 var panel = new WagonUserControl() { Dock = DockStyle.Fill };
-                var server = new FillingSqlServer { Connection = connectionString };
-                var data = server.GetWagons();
-                await panel.BuildAsync(data);
-                panel.OnCreate += (o, arg) =>
-                {
-                    if (server.InsertIntoWagons(arg.Number, arg.Ntype, arg.RealHeight))
-                    {
-                        data = server.GetWagons();
-                        panel.Build(data, arg.Number);
-                    }
-                };
-                panel.OnChange += (o, arg) =>
-                {
-                    if (server.UpdateIntoWagons(arg.Number, arg.Ntype, arg.RealHeight))
-                    {
-                        data = server.GetWagons();
-                        panel.Build(data);
-                    }
-                };
+                panel.SqlServer = new FillingSqlServer { Connection = connectionString };
                 panel.OnDelete += (o, arg) => ShowDeleteWagonConfirm(panel, arg.Number);
 
                 panel.OnGetWagonTypes += Panel_OnGetWagonTypes;
@@ -732,14 +714,8 @@ namespace FillingSystemViewHelper
             {
                 var server = new FillingSqlServer { Connection = connectionString };
                 if (server.DeleteIntoWagons(number))
-                {
-                    var data = server.GetWagons();
-                    listPanel.Build(data);
-                    listPanel.UpdateWaggonList();
-                }
-                UpdateFillingPage(listPanel);
+                    UpdateFillingPage(listPanel);
             };
-
             UpdateFillingPage(panel);
         }
 

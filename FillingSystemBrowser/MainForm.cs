@@ -7,8 +7,6 @@ namespace FillingSystemBrowser
     public partial class MainForm : Form
     {
         private FillingSystemBrowserForm[] panels;
-        private bool masterClose;
-        private bool closeWithoutQuestions;
 
         public MainForm()
         {

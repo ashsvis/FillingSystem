@@ -30,11 +30,8 @@ namespace FillingSystemViewHelper
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.lvTable = new System.Windows.Forms.ListView();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.miAddWaggonType = new System.Windows.Forms.ToolStripMenuItem();
             this.miEditWaggon = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,7 +41,6 @@ namespace FillingSystemViewHelper
             this.btnPreview = new System.Windows.Forms.Button();
             this.btnPrint = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -53,7 +49,7 @@ namespace FillingSystemViewHelper
             // 
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.dataGridView1, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.lvTable, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 0, 2);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -67,49 +63,28 @@ namespace FillingSystemViewHelper
             this.tableLayoutPanel1.Size = new System.Drawing.Size(734, 508);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
-            // dataGridView1
+            // lvTable
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.Window;
-            this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.ContextMenuStrip = this.contextMenuStrip1;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle3;
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 24);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(0);
-            this.dataGridView1.MultiSelect = false;
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.ShowCellToolTips = false;
-            this.dataGridView1.Size = new System.Drawing.Size(734, 441);
-            this.dataGridView1.TabIndex = 4;
-            this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
-            this.dataGridView1.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_RowEnter);
+            this.lvTable.ContextMenuStrip = this.contextMenuStrip1;
+            this.lvTable.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvTable.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lvTable.FullRowSelect = true;
+            this.lvTable.GridLines = true;
+            this.lvTable.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lvTable.HideSelection = false;
+            this.lvTable.Location = new System.Drawing.Point(3, 27);
+            this.lvTable.MultiSelect = false;
+            this.lvTable.Name = "lvTable";
+            this.lvTable.ShowItemToolTips = true;
+            this.lvTable.Size = new System.Drawing.Size(728, 435);
+            this.lvTable.TabIndex = 4;
+            this.lvTable.UseCompatibleStateImageBehavior = false;
+            this.lvTable.View = System.Windows.Forms.View.Details;
+            this.lvTable.VirtualMode = true;
+            this.lvTable.CacheVirtualItems += new System.Windows.Forms.CacheVirtualItemsEventHandler(this.lvTable_CacheVirtualItems);
+            this.lvTable.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.lvTable_RetrieveVirtualItem);
+            this.lvTable.SearchForVirtualItem += new System.Windows.Forms.SearchForVirtualItemEventHandler(this.lvTable_SearchForVirtualItem);
+            this.lvTable.DoubleClick += new System.EventHandler(this.lvTable_DoubleClick);
             // 
             // contextMenuStrip1
             // 
@@ -118,28 +93,28 @@ namespace FillingSystemViewHelper
             this.miEditWaggon,
             this.miDeleteWaggon});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(208, 70);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(183, 70);
             this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
             // 
             // miAddWaggonType
             // 
             this.miAddWaggonType.Name = "miAddWaggonType";
-            this.miAddWaggonType.Size = new System.Drawing.Size(207, 22);
-            this.miAddWaggonType.Text = "Добавить тип цистерны";
+            this.miAddWaggonType.Size = new System.Drawing.Size(182, 22);
+            this.miAddWaggonType.Text = "Добавить цистерну";
             this.miAddWaggonType.Click += new System.EventHandler(this.miAddWaggon_Click);
             // 
             // miEditWaggon
             // 
             this.miEditWaggon.Name = "miEditWaggon";
-            this.miEditWaggon.Size = new System.Drawing.Size(207, 22);
-            this.miEditWaggon.Text = "Изменить тип цистерны";
+            this.miEditWaggon.Size = new System.Drawing.Size(182, 22);
+            this.miEditWaggon.Text = "Изменить цистерну";
             this.miEditWaggon.Click += new System.EventHandler(this.miEditWaggon_Click);
             // 
             // miDeleteWaggon
             // 
             this.miDeleteWaggon.Name = "miDeleteWaggon";
-            this.miDeleteWaggon.Size = new System.Drawing.Size(207, 22);
-            this.miDeleteWaggon.Text = "Удалить тип цистерны";
+            this.miDeleteWaggon.Size = new System.Drawing.Size(182, 22);
+            this.miDeleteWaggon.Text = "Удалить цистерну";
             this.miDeleteWaggon.Click += new System.EventHandler(this.miDeleteWaggon_Click);
             // 
             // label1
@@ -206,7 +181,6 @@ namespace FillingSystemViewHelper
             this.Leave += new System.EventHandler(this.WagonUserControl_Leave);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -220,10 +194,10 @@ namespace FillingSystemViewHelper
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Button btnPreview;
         private System.Windows.Forms.Button btnPrint;
-        private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem miAddWaggonType;
         private System.Windows.Forms.ToolStripMenuItem miEditWaggon;
         private System.Windows.Forms.ToolStripMenuItem miDeleteWaggon;
+        public System.Windows.Forms.ListView lvTable;
     }
 }

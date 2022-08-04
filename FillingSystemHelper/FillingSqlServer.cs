@@ -1379,39 +1379,12 @@ namespace FillingSystemHelper
                             sql += $" AND Product=@Product AND Riser>=@Riser1st AND Riser<=@Riser2nd";
                     }
                 }
-                //var whereList = new List<string>();
-                //if (CommonData.FilterOverpassList.Length > 0)
-                //    whereList.Add($"({string.Join(" OR ", CommonData.FilterOverpassList.Select(item => "[Overpass]=" + item))})");
-                //if (CommonData.FilterWayList.Length > 0)
-                //    whereList.Add($"({string.Join(" OR ", CommonData.FilterWayList.Select(item => "[Way]=" + item))})");
-                //if (CommonData.FilterProductList.Length > 0)
-                //    whereList.Add($"({string.Join(" OR ", CommonData.FilterProductList.Select(item => $"[Product]='{item}'"))})");
-
-                //var rangeRisers = CommonData.FilterRiserRange;
-                //whereList.Add($"[Riser] BETWEEN {rangeRisers.Item1} AND {rangeRisers.Item2}");
-
-                //var rangeSnaps = CommonData.FilterDateTimeRange;
-                //if (rangeSnaps.FirstExists)
-                //    whereList.Add($"[Snaptime] >= @FirstTime");
-                //if (rangeSnaps.LastExists)
-                //    whereList.Add($"[Snaptime] <= @LastTime");
-
-                //var events = CommonData.FilterEventsList;
-                //if (events.Length > 0)
-                //    whereList.Add($"({string.Join(" OR ", events.Select(item => $"[EventInfo] LIKE '{item}%'"))})");
-
-                //if (whereList.Count > 0)
-                //    sql += $" WHERE ({string.Join(" AND ", whereList)})";
                 sql += " ORDER BY [Snaptime]";
                 var count = endIndex - startIndex;
                 if (count <= 0) count = 1;
                 sql += $" OFFSET {startIndex} ROWS FETCH NEXT {count} ROWS ONLY";
                 using (var cmd = new SqlCommand(sql, con))
                 {
-                    //if (rangeSnaps.FirstExists)
-                    //    cmd.Parameters.AddWithValue("@FirstTime", rangeSnaps.First);
-                    //if (rangeSnaps.LastExists)
-                    //    cmd.Parameters.AddWithValue("@LastTime", rangeSnaps.Last);
                     var rangeSnaps = CommonData.FilterDateTimeRange;
                     cmd.Parameters.AddWithValue("@FirstTime", rangeSnaps.FirstExists ? rangeSnaps.First : new DateTime(2000, 1, 1));
                     cmd.Parameters.AddWithValue("@LastTime", rangeSnaps.LastExists ? rangeSnaps.Last : new DateTime(2099, 12, 31));
@@ -1525,11 +1498,30 @@ namespace FillingSystemHelper
             }
         }
 
-        public DataTable GetWagons()
+        public int GetWagonsRowsCount()
         {
             using (var con = new SqlConnection(Connection))
             {
-                string sql = "SELECT [Number],[Ntype],[RealHeight],[FillCount] FROM [WAGONS]";
+                con.Open();
+                string sql = "SELECT COUNT(*) FROM [WAGONS]";
+                int countRows;
+                using (var cmd = new SqlCommand(sql, con))
+                {
+                    countRows = (int)cmd.ExecuteScalar();
+                }
+                con.Close();
+                return countRows;
+            }
+        }
+
+        public DataTable GetWagons(int startIndex, int endIndex)
+        {
+            using (var con = new SqlConnection(Connection))
+            {
+                string sql = "SELECT [Number],[Ntype],[RealHeight],[FillCount] FROM [WAGONS] ORDER BY [Number]";
+                var count = endIndex - startIndex;
+                if (count <= 0) count = 1;
+                sql += $" OFFSET {startIndex} ROWS FETCH NEXT {count} ROWS ONLY";
                 using (var cmd = new SqlCommand(sql, con))
                 {
                     using (var da = new SqlDataAdapter(cmd))
@@ -1547,6 +1539,43 @@ namespace FillingSystemHelper
                         return ds.Tables.Count == 1 ? ds.Tables[0] : null;
                     }
                 }
+            }
+        }
+
+        public string GetWagon(int index)
+        {
+            using (var con = new SqlConnection(Connection))
+            {
+                con.Open();
+                string sql = "SELECT [Number] FROM [WAGONS] ORDER BY [Number]";
+                sql += $" OFFSET {index} ROWS FETCH NEXT 1 ROWS ONLY";
+                string number = "";
+                using (var cmd = new SqlCommand(sql, con))
+                {
+                    number = (string)cmd.ExecuteScalar();
+                }
+                con.Close();
+                return number;
+            }
+        }
+
+        public int GetWagonIndex(string number)
+        {
+            using (var con = new SqlConnection(Connection))
+            {
+                con.Open();
+                string sql = "SELECT RowNumber FROM (SELECT ROW_NUMBER() OVER (ORDER BY [Number] ASC) AS RowNumber, [Number]" +
+                             " FROM [PNVC].[dbo].[WAGONS]) AS W" +
+                             " WHERE W.Number = @Number";
+                int index = -1;
+                using (var cmd = new SqlCommand(sql, con))
+                {
+                    cmd.Parameters.AddWithValue("@Number", number);
+                    var value = cmd.ExecuteScalar();
+                    index = Convert.ToInt32(value);
+                }
+                con.Close();
+                return index;
             }
         }
 
@@ -1657,39 +1686,6 @@ namespace FillingSystemHelper
                 }
             }
         }
-
-        //private string GetStringField(int overpass, int way, string product, int riser, string fieldName)
-        //{
-        //    using (var con = new SqlConnection(Connection))
-        //    {
-        //        try
-        //        {
-        //            con.Open();
-        //            try
-        //            {
-        //                string sql = $"SELECT [{fieldName}] FROM [FETCHING] WHERE [Overpass]=@Overpass AND [Way]=@Way AND [Product]=@Product AND [Riser]=@Riser";
-        //                using (var cmd = new SqlCommand(sql, con))
-        //                {
-        //                    cmd.Parameters.AddWithValue("@Overpass", overpass);
-        //                    cmd.Parameters.AddWithValue("@Way", way);
-        //                    cmd.Parameters.AddWithValue("@Product", product);
-        //                    cmd.Parameters.AddWithValue("@Riser", riser);
-        //                    LastError = null;
-        //                    return (string)cmd.ExecuteScalar();
-        //                }
-        //            }
-        //            finally
-        //            {
-        //                con.Close();
-        //            }
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            LastError = ex;
-        //            return null;
-        //        }
-        //    }
-        //}
 
         public int GetSetpoint(int overpass, int way, string product, int riser)
         {

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -82,9 +83,14 @@ namespace FillingSystemViewHelper
 
         private void lvTable_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
         {
-            var lvi = new ListViewItem($"{e.ItemIndex}");
+            var lvi = new ListViewItem();
             lvi.SubItems.AddRange(new string[] { "", "", "", "", "", "", "", "" });
             e.Item = lvi;
+            if ((e.ItemIndex % 2) == 1)
+            {
+                e.Item.BackColor = Color.FromArgb(227, 227, 227);
+                e.Item.UseItemStyleForSubItems = true;
+            }
             if (cash.Count == 0 || !cash.ContainsKey(e.ItemIndex))
                 return;
             var row = cash[e.ItemIndex];
@@ -113,5 +119,6 @@ namespace FillingSystemViewHelper
         {         
             lvTable.VirtualListSize = SqlServer.GetLogReportRowsCount();
         }
+
     }
 }
